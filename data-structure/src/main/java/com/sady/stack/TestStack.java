@@ -1,28 +1,36 @@
 package com.sady.stack;
 
+import java.util.EmptyStackException;
+
 class BasicStack<T>{
 	
 	private T [] stackArray;
-	private int stackPointer;
+	private int top;
 	
 	public BasicStack() {
-		stackArray = (T[]) new Object[50];
-		stackPointer = 0; 
+		this(100);
+	}
+	
+	public BasicStack(int size) {
+		stackArray = (T[]) new Object[size];
 	}
 	
 	public void push(T item){
-		stackArray[stackPointer++] = item;
+		if(top == stackArray.length){
+			//copy to new array doubling the size
+		}
+		stackArray[top++] = item;
 	}
 	
 	public T pop(){
-		if(stackPointer == 0){
-			throw new IllegalStateException("No item found");
+		if(isEmpty()){
+			throw new EmptyStackException();
 		}
-		return stackArray[--stackPointer];
+		return stackArray[--top];
 	}
 	
 	public boolean contains(T item){
-		for(int i = 0; i < stackPointer; i++){
+		for(int i = 0; i < top; i++){
 			if(stackArray[i].equals(item)){
 				return true;
 			}
@@ -30,18 +38,22 @@ class BasicStack<T>{
 		return false;
 	}
 	
-	public T access(T item){
-		for(int i = 0; i < stackPointer; i++){
-			if(stackArray[i].equals(item)){
-				return stackArray[i];
-			}
+	public boolean isEmpty(){
+		if(top == 0){
+			return true;
 		}
-		
-		throw new IllegalStateException("No item found");
+		return false;
+	}
+	
+	public T peek(){
+		if(isEmpty()){
+			throw new EmptyStackException();
+		}
+		return stackArray[top-1];
 	}
 	
 	public int size(){
-		return stackPointer;
+		return top;
 	}
 }
 
@@ -51,8 +63,9 @@ public class TestStack {
 	public static void main(String[] args) {
 		BasicStack<String> stacklist = new BasicStack<String>();
 		stacklist.push("hello");
+		stacklist.push("hello2");
 		
-		String s = stacklist.pop();
+		System.out.println(stacklist.peek());
 	}
 	
 	
