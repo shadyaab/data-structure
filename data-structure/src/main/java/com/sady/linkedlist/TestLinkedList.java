@@ -2,6 +2,8 @@ package com.sady.linkedlist;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.beans.propertyeditors.CurrencyEditor;
+
 class BasicLinkedList<T>{
 	
 	private Node first;
@@ -31,6 +33,7 @@ class BasicLinkedList<T>{
 			last.nextNode = node;
 			last = node;
 		}
+		nodeCount++;
 	}
 	
 	public T remove(){
@@ -49,23 +52,71 @@ class BasicLinkedList<T>{
 		}
 		return false;
 	}
+
+	public int size(){
+		return nodeCount;
+	}
 	
+	public void insert(int index, T item) {
+		if(index > nodeCount){
+			throw new IndexOutOfBoundsException("LinkedList is smaller than the given index");
+		}
+		Node currentNode = first;
+		
+		for (int i = 1; i < index; i++) {
+			currentNode = currentNode.nextNode;
+		}
+		
+		Node node = new Node(item);
+		Node nextNode = currentNode.nextNode;
+		currentNode.nextNode = node;
+		node.nextNode = nextNode;
+		nodeCount++;
+	}
 	
-	//add
-	//remove
-	//insert
-	//removeAt
-	//get
-	//find
+	public T remove(int index){
+		if(first == null){
+			throw new IllegalStateException("LinkedList is empty");
+		}
+		
+		if(index > nodeCount){
+			throw new IndexOutOfBoundsException("LinkedList is smaller than the given index");
+		}
+		
+		Node currentNode = first;
+		Node prevNode = first;
+		for (int i = 1; i < index; i++) {
+			prevNode = currentNode;
+			currentNode = currentNode.nextNode;
+		}
+		
+		T nodeItem = currentNode.nodeItem;
+		prevNode.nextNode = currentNode.nextNode;
+		nodeCount--;
+		
+		return nodeItem;
+	}
 	
-	
-	
-	
-	
+	public T get(int index){
+		if(index > nodeCount){
+			throw new IndexOutOfBoundsException("LinkedList is smaller than the given index");
+		}
+		
+		Node currentNode = first;
+		for (int i = 1; i < index; i++) {
+			currentNode = currentNode.nextNode;
+		}
+		
+		return currentNode.nodeItem;	
+	}
 	
 }
 
 
 public class TestLinkedList {
+	
+	public static void main(String[] args) {
+		
+	}
 
 }
