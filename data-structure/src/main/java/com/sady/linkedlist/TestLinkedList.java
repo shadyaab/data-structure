@@ -2,8 +2,6 @@ package com.sady.linkedlist;
 
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.propertyeditors.CurrencyEditor;
-
 class BasicLinkedList<T>{
 	
 	private Node first;
