@@ -52,11 +52,11 @@ interface Tree<T extends Comparable<T>> {
 	public T getMax();
 
 	public T getMin();
-	
+
 	public Node<T> getRootNode();
-	
+
 	public boolean compareBinaryTree(Node<T> node1, Node<T> node2);
-	
+
 	public Node<T> getKSmallestItem(Node<T> node, int k);
 
 }
@@ -162,55 +162,55 @@ class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 			throw new RuntimeException("Tree is empty");
 		}
 
-		 delete(data, root);
+		delete(data, root);
 
 	}
 
 	private Node<T> delete(T data, Node<T> node) {
 
-		if(node == null) {
+		if (node == null) {
 			return node;
 		}
-		
+
 		if (data.compareTo(node.getData()) < 0) {
 			node.setLeftNode(delete(data, node.getLeftNode()));
 		} else if (data.compareTo(node.getData()) > 0) {
 			node.setRightNode(delete(data, node.getRightNode()));
 		} else {
-			
-			//Removing leaf node
-			if(node.getLeftNode() == null && node.getRightNode() == null) {
+
+			// Removing leaf node
+			if (node.getLeftNode() == null && node.getRightNode() == null) {
 				System.out.println("Removing leaf node");
 				return null;
 			}
-			
-			//Removing single child node
-			if(node.getRightNode() == null) {
+
+			// Removing single child node
+			if (node.getRightNode() == null) {
 				System.out.println("Removing left child node ");
 				Node<T> tempNode = node.getLeftNode();
 				node = null;
 				return tempNode;
-			} else if(node.getLeftNode() == null) {
+			} else if (node.getLeftNode() == null) {
 				System.out.println("Removing right child node");
 				Node<T> tempNode = node.getRightNode();
 				node = null;
 				return tempNode;
 			}
-			
-			//Removing double child node
+
+			// Removing double child node
 			System.out.println("Removing two child node");
 			Node<T> predecessor = getPredecessor(node.getLeftNode());
-			
+
 			node.setData(predecessor.getData());
 			node.setLeftNode(delete(predecessor.getData(), node.getLeftNode()));
-			
+
 		}
 		return node;
-		
+
 	}
 
 	private Node<T> getPredecessor(Node<T> node) {
-		if(node.getRightNode() != null) {
+		if (node.getRightNode() != null) {
 			getPredecessor(node.getRightNode());
 		}
 		System.out.println("Predecessor: " + node.getData());
@@ -257,44 +257,44 @@ class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 
 	@Override
 	public boolean compareBinaryTree(Node<T> node1, Node<T> node2) {
-		
-		if(node1 == null || node2 == null) {
+
+		if (node1 == null || node2 == null) {
 			return node1 == node2;
-		} 
-		
-		//If the value of node is not same, return false
-		if(node1.getData().compareTo(node2.getData()) != 0) {
+		}
+
+		// If the value of node is not same, return false
+		if (node1.getData().compareTo(node2.getData()) != 0) {
 			return false;
 		}
-		
+
 		return compareBinaryTree(node1.getLeftNode(), node2.getLeftNode())
-					&& compareBinaryTree(node1.getRightNode(), node2.getRightNode());
-				
+				&& compareBinaryTree(node1.getRightNode(), node2.getRightNode());
+
 	}
 
 	@Override
 	public Node<T> getKSmallestItem(Node<T> node, int k) {
-		
+
 		int n = treeSize(node.getLeftNode()) + 1;
-		
+
 		if (n == k) {
 			return node;
 		}
-		
-		if(n > k) {
+
+		if (n > k) {
 			return getKSmallestItem(node.getLeftNode(), k);
 		}
-		
-		if(n < k) {
-			return getKSmallestItem(node.getRightNode(), k-n);
+
+		if (n < k) {
+			return getKSmallestItem(node.getRightNode(), k - n);
 		}
-		
+
 		return null;
 	}
-	
+
 	private int treeSize(Node<T> node) {
-		
-		if(node == null) {
+
+		if (node == null) {
 			return 0;
 		}
 		return treeSize(node.getLeftNode()) + treeSize(node.getRightNode()) + 1;
