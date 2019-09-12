@@ -85,7 +85,7 @@ class BasicLinkedList<T>{
 		Node prevNode = first;
 		for (int i = 1; i < index; i++) {
 			prevNode = currentNode;
-			currentNode = currentNode.nextNode;
+			currentNode = currentNode.nextNode; 
 		}
 		
 		T nodeItem = currentNode.nodeItem;
@@ -114,7 +114,6 @@ class BasicLinkedList<T>{
 public class TestLinkedList {
 	
 	public static void main(String[] args) {
-		
 	}
 
 }
